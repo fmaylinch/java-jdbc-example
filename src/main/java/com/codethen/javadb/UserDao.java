@@ -37,20 +37,10 @@ public class UserDao {
 
 			return users;
 
-		} catch(Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException("Error finding user", e);
 		} finally {
-			close(rs, stmt, conn);
-		}
-	}
-
-	private void close(ResultSet rs, PreparedStatement stmt, Connection conn) {
-		try {
-			rs.close();
-			stmt.close();
-			conn.close();
-		} catch (Exception e) {
-			e.printStackTrace(); // will print the exception stack trace
+			DatabaseUtil.close(rs, stmt, conn);
 		}
 	}
 
@@ -78,12 +68,82 @@ public class UserDao {
 
 			// next code is boilerplate (exception handling and closing resources)
 
-		} catch(Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException("Error finding user", e);
 		} finally {
-			close(rs, stmt, conn);
+			DatabaseUtil.close(rs, stmt, conn);
 		}
 	}
+
+	public void create(User user) {
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		try {
+
+			conn = DatabaseUtil.getConnection();
+
+			// prepare and execute update
+			stmt = conn.prepareStatement("insert into users (username, name, email) values (?, ?, ?)");
+			stmt.setString(1, user.getUsername());
+			stmt.setString(2, user.getName());
+			stmt.setString(3, user.getEmail());
+
+			stmt.executeUpdate();
+
+		} catch(Exception e) {
+			throw new RuntimeException("error creating user", e);
+		} finally {
+			DatabaseUtil.close(null, stmt, conn);
+		}
+	}
+
+	public void update(User user) {
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		try {
+
+			conn = DatabaseUtil.getConnection();
+
+			stmt = conn.prepareStatement("update users set username = ?, name = ?, email = ? where id = ?");
+			stmt.setString(1, user.getUsername());
+			stmt.setString(2, user.getName());
+			stmt.setString(3, user.getEmail());
+			stmt.setInt(4, user.getId());
+
+			stmt.executeUpdate();
+
+		} catch (Exception e) {
+			throw new RuntimeException("error updating user", e);
+		} finally {
+			DatabaseUtil.close(null, stmt, conn);
+		}
+	}
+
+	public void delete(int id) {
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		try {
+
+			conn = DatabaseUtil.getConnection();
+
+			stmt = conn.prepareStatement("delete from users where id = ?");
+			stmt.setInt(1, id);
+
+			stmt.executeUpdate();
+
+		} catch (Exception e) {
+			throw new RuntimeException("error updating user", e);
+		} finally {
+			DatabaseUtil.close(null, stmt, conn);
+		}
+	}
+
 
 	private User getUser(ResultSet rs) throws SQLException
 	{

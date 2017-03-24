@@ -2,6 +2,8 @@ package com.codethen.javadb;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DatabaseUtil {
@@ -17,5 +19,21 @@ public class DatabaseUtil {
 			"jdbc:mysql://" + host + "/" + schema + "?user=" + user + "&password=" + pwd);
 
 		return conn;
+	}
+
+	public static void close(ResultSet rs, PreparedStatement stmt, Connection conn) {
+		try {
+			if (rs != null) {
+				rs.close();
+			}
+			if (stmt != null) {
+				stmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace(); // will print the exception stack trace
+		}
 	}
 }
