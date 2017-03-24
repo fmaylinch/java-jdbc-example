@@ -10,7 +10,7 @@ public class UserDaoTest {
 	@Test
 	public void simpleTest() {
 
-		UserDao userDao = new UserDao();
+		UserDaoSimple userDao = new UserDaoSimple(); // Testing the new DAO
 
 		// Create users into DB
 
