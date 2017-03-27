@@ -3,6 +3,9 @@ package com.codethen.javadb;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -161,7 +164,48 @@ public abstract class GenericDao<T> {
 
 
 	/** Retrieve data from the ResultSet (same columns as {@link #getColumnNames()}) and create object */
-	protected abstract T getObject(ResultSet rs) throws SQLException;
+	protected T getObject(ResultSet rs) throws SQLException {
+
+		try {
+			// create instance of the model class
+			T object = type.newInstance();
+
+			// sets values from rs to the instance
+			Field[] fields = type.getDeclaredFields();
+			for (Field field : fields) {
+
+				field.setAccessible(true);
+
+				if (field.getType() == int.class) {
+
+					int value = rs.getInt(field.getName());
+					setValue(object, field, value);
+
+				} else if (field.getType() == String.class) {
+
+					String value = rs.getString(field.getName());
+					setValue(object, field, value);
+
+				} else {
+
+					throw new RuntimeException("Type not supported: " + field.getType());
+				}
+			}
+
+			// return instance
+			return object;
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private void setValue(T object, Field field, Object value) throws Exception
+	{
+		String methodName = "set" + StringUtils.capitalize( field.getName() );
+		Method setter = type.getMethod(methodName, field.getType());
+		setter.invoke(object, value);
+	}
 
 	/** Returns the column names, in the same order you set them in {@link #setValues(Object, PreparedStatement, boolean)} */
 	protected abstract List<String> getColumnNames();

@@ -6,7 +6,7 @@ public class MainTestDao {
 
 	public static void main(String[] args) {
 
-		UserDao userDao = new UserDao();
+		UserDaoComplex userDao = new UserDaoComplex();
 
 		User user = userDao.findById(2);
 

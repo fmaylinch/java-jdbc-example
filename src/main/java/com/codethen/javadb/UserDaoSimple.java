@@ -1,29 +1,17 @@
 package com.codethen.javadb;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * This DAO is much simpler than {@link UserDao} because it relies on {@link GenericDao}.
+ * This DAO is much simpler than {@link UserDaoComplex} because it relies on {@link GenericDao}.
  */
-public class UserDaoSimple extends GenericDao<User> {
+public class UserDaoSimple extends GenericDao<User> implements UserDao {
 
 	public UserDaoSimple() {
 		super("users", User.class);
-	}
-	
-	@Override
-	protected User getObject(ResultSet rs) throws SQLException {
-
-		User user = new User();
-		user.setId( rs.getInt("id") );
-		user.setUsername( rs.getString("username") );
-		user.setName( rs.getString("name") );
-		user.setEmail( rs.getString("email") );
-		return user;
 	}
 
 	@Override
