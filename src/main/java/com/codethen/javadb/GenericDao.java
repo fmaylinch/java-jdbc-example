@@ -4,7 +4,6 @@ package com.codethen.javadb;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -173,23 +172,9 @@ public abstract class GenericDao<T> {
 			// sets values from rs to the instance
 			Field[] fields = type.getDeclaredFields();
 			for (Field field : fields) {
-
 				field.setAccessible(true);
-
-				if (field.getType() == int.class) {
-
-					int value = rs.getInt(field.getName());
-					setValue(object, field, value);
-
-				} else if (field.getType() == String.class) {
-
-					String value = rs.getString(field.getName());
-					setValue(object, field, value);
-
-				} else {
-
-					throw new RuntimeException("Type not supported: " + field.getType());
-				}
+				Object value = rs.getObject(field.getName());
+				setValue(object, field, value);
 			}
 
 			// return instance
