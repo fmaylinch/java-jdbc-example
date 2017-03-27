@@ -5,7 +5,7 @@ import java.util.List;
 public class UserService {
 
 	private UserDao userDao;
-	// TODO: private MailService mailService;
+	// private MailService mailService;
 
 	public UserService(UserDao userDao) {
 		this.userDao = userDao;
@@ -13,7 +13,7 @@ public class UserService {
 
 	public void create(User user) {
 		userDao.create(user);
-		// TODO: mailService.sendWelcomeEmail(user.getEmail());
+		// mailService.sendWelcomeEmail(user.getEmail());
 	}
 
 	public List<User> findAll() {

@@ -14,6 +14,9 @@ public class UserDaoSimple extends GenericDao<User> implements UserDao {
 		super("users", User.class);
 	}
 
+
+	// TODO: try to move the following methods to GenericDao:
+
 	@Override
 	protected List<String> getColumnNames() {
 		return Arrays.asList("username", "name", "email");

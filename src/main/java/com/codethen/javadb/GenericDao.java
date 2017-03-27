@@ -18,7 +18,7 @@ import java.util.List;
 public abstract class GenericDao<T> {
 
 	private String tableName;
-	private Class<T> type; // TODO: use this type with reflection to make this GenericDao more automatic
+	private Class<T> type;
 
 
 	public GenericDao(String tableName, Class<T> type) {
