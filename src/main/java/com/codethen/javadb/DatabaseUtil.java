@@ -1,5 +1,8 @@
 package com.codethen.javadb;
 
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -19,6 +22,21 @@ public class DatabaseUtil {
 			"jdbc:mysql://" + host + "/" + schema + "?user=" + user + "&password=" + pwd);
 
 		return conn;
+	}
+
+	public static DataSource getDataSource() {
+
+		String host = "localhost";
+		String schema = "test";
+		String user = "root";
+		String pwd = "maysicuel";
+
+		MysqlDataSource dataSource = new MysqlDataSource();
+		dataSource.setURL("jdbc:mysql://" + host + "/" + schema);
+		dataSource.setUser(user);
+		dataSource.setPassword(pwd);
+
+		return dataSource;
 	}
 
 	public static void close(ResultSet rs, PreparedStatement stmt, Connection conn) {

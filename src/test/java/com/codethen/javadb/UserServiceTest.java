@@ -3,6 +3,7 @@ package com.codethen.javadb;
 import org.junit.Assert;
 import org.junit.Test;
 
+import javax.sql.DataSource;
 import java.util.List;
 
 public class UserServiceTest {
@@ -10,7 +11,11 @@ public class UserServiceTest {
 	@Test
 	public void simpleTest() {
 
-		UserService userService = new UserService(new UserDaoSimple());
+		DataSource dataSource = DatabaseUtil.getDataSource();
+
+		UserDao userDao = new UserDaoSpring(dataSource);
+
+		UserService userService = new UserService(userDao);
 
 		// Create users into DB
 
@@ -36,7 +41,7 @@ public class UserServiceTest {
 
 		// remove created users
 		for (User u : users) {
-			new UserDaoComplex().delete(u.getId());
+			userDao.delete(u.getId());
 		}
 	}
 }
