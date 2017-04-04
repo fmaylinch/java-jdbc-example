@@ -1,5 +1,8 @@
-package com.codethen.javadb;
+package com.codethen.javadb.dao;
 
+
+import com.codethen.javadb.util.DatabaseUtil;
+import com.codethen.javadb.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

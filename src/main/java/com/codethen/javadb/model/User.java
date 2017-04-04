@@ -1,4 +1,4 @@
-package com.codethen.javadb;
+package com.codethen.javadb.model;
 
 public class User {
 

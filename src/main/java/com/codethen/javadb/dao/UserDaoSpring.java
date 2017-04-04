@@ -1,11 +1,10 @@
-package com.codethen.javadb;
+package com.codethen.javadb.dao;
 
+import com.codethen.javadb.model.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import javax.sql.DataSource;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 public class UserDaoSpring implements UserDao {
@@ -32,19 +31,6 @@ public class UserDaoSpring implements UserDao {
 
 		Object[] args = { id };
 
-		RowMapper<User> rowMapper = new RowMapper<User>() {
-			@Override
-			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-				User user = new User();
-				user.setId( rs.getInt("id") );
-				user.setUsername( rs.getString("username") );
-				user.setName( rs.getString("name") );
-				user.setEmail( rs.getString("email") );
-				return user;
-			}
-		};
-
 		return template.queryForObject(sql, args, rowMapper);
 	}
 
@@ -67,4 +53,15 @@ public class UserDaoSpring implements UserDao {
 
 		template.update("delete from users where id = ?", id);
 	}
+
+
+	private RowMapper<User> rowMapper = (rs, rowNum) -> {
+
+		User user = new User();
+		user.setId( rs.getInt("id") );
+		user.setUsername( rs.getString("username") );
+		user.setName( rs.getString("name") );
+		user.setEmail( rs.getString("email") );
+		return user;
+	};
 }

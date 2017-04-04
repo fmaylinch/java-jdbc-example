@@ -1,6 +1,7 @@
-package com.codethen.javadb;
+package com.codethen.javadb.dao;
 
 
+import com.codethen.javadb.util.DatabaseUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;

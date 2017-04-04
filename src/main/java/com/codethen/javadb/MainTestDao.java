@@ -1,5 +1,8 @@
 package com.codethen.javadb;
 
+import com.codethen.javadb.dao.UserDaoComplex;
+import com.codethen.javadb.model.User;
+
 import java.util.List;
 
 public class MainTestDao {

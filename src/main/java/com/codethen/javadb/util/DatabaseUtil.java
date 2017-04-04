@@ -1,4 +1,4 @@
-package com.codethen.javadb;
+package com.codethen.javadb.util;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
