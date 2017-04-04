@@ -37,7 +37,7 @@ public class UserServiceTest {
 		List<User> users = userService.findByEmailDomain("gmail.com");
 
 		Assert.assertEquals(2, users.size());
-		// TODO: we could check more things, like emails
+		// TODO: check more things, like emails
 	}
 
 	@Test
@@ -72,7 +72,12 @@ public class UserServiceTest {
 	// In unit tests we only test one class (the others are mocked if necessary).
 	// When multiple services are tested we say it's an integration test.
 	// In integration tests we usually test a whole operation of our business.
-	//@Test
+	//
+	// Besides, this method has a problem: it connects to the real database.
+	// Tests usually should not use the real database.
+	//
+	// @Test // <-- uncomment to enable (you'll need it to test your DAO)
+	//
 	public void simpleIntegrationTest() throws Exception {
 
 		DataSource dataSource = DatabaseUtil.getDataSource();

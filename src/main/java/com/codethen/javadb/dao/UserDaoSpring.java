@@ -1,6 +1,7 @@
 package com.codethen.javadb.dao;
 
 import com.codethen.javadb.model.User;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -21,7 +22,7 @@ public class UserDaoSpring implements UserDao {
 	@Override
 	public List<User> findAll() {
 
-		return null; // TODO: check documentation to use the appropriate method
+		return null; // TODO
 	}
 
 	@Override
@@ -54,14 +55,5 @@ public class UserDaoSpring implements UserDao {
 		template.update("delete from users where id = ?", id);
 	}
 
-
-	private RowMapper<User> rowMapper = (rs, rowNum) -> {
-
-		User user = new User();
-		user.setId( rs.getInt("id") );
-		user.setUsername( rs.getString("username") );
-		user.setName( rs.getString("name") );
-		user.setEmail( rs.getString("email") );
-		return user;
-	};
+	private RowMapper<User> rowMapper = new BeanPropertyRowMapper<>(User.class);
 }

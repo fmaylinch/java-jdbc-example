@@ -1,5 +1,7 @@
 package com.codethen.javadb.model;
 
+// Follows the convention of Java beans (more or less) so we can use BeanPropertyRowMapper
+
 public class User {
 
 	private int id;
